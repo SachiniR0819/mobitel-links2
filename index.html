@@ -16,6 +16,8 @@
             background: #f5f5f5;
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
         .top-bar {
@@ -27,10 +29,49 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-section img {
+            height: 50px;
+            width: auto;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .logo-section h2 {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .user-info {
             text-align: right;
+            animation: fadeIn 0.8s ease 0.2s both;
         }
 
         .user-name {
@@ -50,8 +91,21 @@
             border-radius: 8px;
             padding: 40px;
             box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
+            flex: 1;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header {
@@ -72,39 +126,108 @@
             font-size: 1em;
         }
 
-        .links-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
-        .link-item {
+        .link-tile {
             background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
             text-decoration: none;
             color: #333;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0, 123, 255, 0.08);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.08);
+            animation: fadeInScale 0.5s ease backwards;
+            position: relative;
+            overflow: hidden;
         }
 
-        .link-item:hover {
+        .link-tile:nth-child(1) { animation-delay: 0.1s; }
+        .link-tile:nth-child(2) { animation-delay: 0.2s; }
+        .link-tile:nth-child(3) { animation-delay: 0.3s; }
+        .link-tile:nth-child(4) { animation-delay: 0.4s; }
+        .link-tile:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .link-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .link-tile:hover::before {
+            left: 100%;
+        }
+
+        .link-tile:hover {
             border-color: #007bff;
-            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
-            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+            transform: translateY(-5px);
         }
 
-        .link-item h3 {
+        .link-tile h3 {
             color: #007bff;
-            font-size: 1.2em;
-            margin-bottom: 8px;
+            font-size: 1.3em;
+            margin-bottom: 12px;
             font-weight: 600;
         }
 
-        .link-item p {
+        .link-tile p {
             color: #28a745;
             font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .footer {
+            background: white;
+            padding: 25px 40px;
+            box-shadow: 0 -2px 4px rgba(0, 123, 255, 0.1);
+            margin-top: 30px;
+            border-radius: 8px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer p {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .footer .copyright {
+            color: #007bff;
+            font-weight: 600;
+            margin-top: 10px;
         }
 
         @media (max-width: 768px) {
@@ -126,17 +249,26 @@
             .header h1 {
                 font-size: 1.6em;
             }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="top-bar">
-        <div class="logo">
-            <h2 style="color: #007bff; font-weight: 600;">Mobitel</h2>
+        <div class="logo-section">
+            <img src="logo.png" alt="Mobitel Logo">
+            <h2>Mobitel</h2>
         </div>
         <div class="user-info">
-            <div class="user-name">Your Name</div>
-            <div class="user-email">your.email@mobitel.lk</div>
+            <div class="user-name">Sachini Ranaweera</div>
+            <div class="user-email">sachinir@mobitel.lk</div>
         </div>
     </div>
 
@@ -146,32 +278,43 @@
             <p>Quick access to your work portals</p>
         </div>
 
-        <div class="links-list">
-            <a href="https://mattendance.mobitel.lk/attendance" class="link-item" target="_blank">
+        <div class="links-grid">
+            <a href="https://mattendance.mobitel.lk/attendance" class="link-tile" target="_blank">
                 <h3>M-Attendance</h3>
-                <p>mattendance.mobitel.lk/attendance</p>
+                <p>Track and manage your attendance records</p>
+                <p style="margin-top: 8px; font-size: 0.85em;">mattendance.mobitel.lk</p>
             </a>
 
-            <a href="https://mpayslip.mobitel.lk/MOBITELSLP/" class="link-item" target="_blank">
+            <a href="https://mpayslip.mobitel.lk/MOBITELSLP/" class="link-tile" target="_blank">
                 <h3>M-Payslip</h3>
-                <p>mpayslip.mobitel.lk/MOBITELSLP/</p>
+                <p>View your monthly payslips and salary details</p>
+                <p style="margin-top: 8px; font-size: 0.85em;">mpayslip.mobitel.lk</p>
             </a>
 
-            <a href="https://portal.gpshealthhub.com/authentication/sign-in" class="link-item" target="_blank">
-                <h3>Insurance Claims Portal</h3>
-                <p>portal.gpshealthhub.com</p>
+            <a href="https://portal.gpshealthhub.com/authentication/sign-in" class="link-tile" target="_blank">
+                <h3>Insurance Claims</h3>
+                <p>Submit and track your health insurance claims</p>
+                <p style="margin-top: 8px; font-size: 0.85em;">GPS Health Hub Portal</p>
             </a>
 
-            <a href="https://ebs.mobitel.lk" class="link-item" target="_blank">
+            <a href="https://ebs.mobitel.lk" class="link-tile" target="_blank">
                 <h3>EBS Login</h3>
-                <p>Oracle Access Management</p>
+                <p>Access Oracle Enterprise Business Suite</p>
+                <p style="margin-top: 8px; font-size: 0.85em;">Oracle Access Management</p>
             </a>
 
-            <a href="https://mdocuments.mobitel.lk" class="link-item" target="_blank">
+            <a href="https://mdocuments.mobitel.lk" class="link-tile" target="_blank">
                 <h3>M-Documents</h3>
-                <p>PrimeFaces Apollo</p>
+                <p>Access and manage company documents</p>
+                <p style="margin-top: 8px; font-size: 0.85em;">PrimeFaces Apollo</p>
             </a>
         </div>
+    </div>
+
+    <div class="footer">
+        <p>Mobitel Workplace Portal</p>
+        <p>All your essential work links in one place</p>
+        <p class="copyright">© 2024 Mobitel. All rights reserved.</p>
     </div>
 </body>
 </html>
